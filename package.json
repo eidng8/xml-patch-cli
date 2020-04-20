@@ -1,0 +1,49 @@
+{
+  "name": "ts-hello",
+  "version": "0.0.1",
+  "description": "An emtpy TypeScript project template, setup with babel and jest, bundles with webpack.",
+  "main": "bin/index.js",
+  "bin": "bin/index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "node ./bin/index.js",
+    "test": "jest",
+    "test-cover": "jest --coverage"
+  },
+  "keywords": [
+    "typescript",
+    "babel",
+    "jest",
+    "webpack"
+  ],
+  "files": ["bin"],
+  "author": "eidng8",
+  "license": "GPL-3.0",
+  "repository": "git@github.com:eidng8/typescript-webpack-cli.git",
+  "bugs": "git@github.com:eidng8/typescript-webpack-cli/issues",
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
