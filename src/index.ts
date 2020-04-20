@@ -1,5 +1,3 @@
-export default function sayHello(who: string): string {
-  return `Hello ${who}!`;
-}
+import Cli from './Cli';
 
-console.log(sayHello('World'));
+new Cli().run();

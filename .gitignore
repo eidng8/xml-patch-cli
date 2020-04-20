@@ -1,3 +1,5 @@
+tests/*.out.xml
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
@@ -275,7 +277,7 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
-*.log
+#*.log
 *.vspscc
 *.vssscc
 .builds
@@ -463,7 +465,7 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-node_modules/
+#node_modules/
 
 # Visual Studio 6 build log
 *.plg
@@ -619,3 +621,4 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+/tests/1A.out.xml

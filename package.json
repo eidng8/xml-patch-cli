@@ -1,14 +1,14 @@
 {
   "name": "ts-hello",
   "version": "0.0.1",
-  "description": "An emtpy TypeScript project template, setup with babel and jest, bundles with webpack.",
+  "description": "RFC 5261 compliant XML patch command line tool.",
   "main": "bin/index.js",
   "bin": "bin/index.js",
   "scripts": {
     "build": "webpack",
     "start": "node ./bin/index.js",
-    "test": "jest",
-    "test-cover": "jest --coverage"
+    "dev": "webpack --mode=development --watch --devtool source-map",
+    "test": "jest"
   },
   "keywords": [
     "typescript",
@@ -16,17 +16,28 @@
     "jest",
     "webpack"
   ],
-  "files": ["bin"],
+  "files": [
+    "bin"
+  ],
   "author": "eidng8",
   "license": "GPL-3.0",
-  "repository": "git@github.com:eidng8/typescript-webpack-cli.git",
-  "bugs": "git@github.com:eidng8/typescript-webpack-cli/issues",
+  "repository": "git@github.com:eidng8/xml-patch-cli.git",
+  "bugs": "git@github.com:eidng8/xml-patch-cli/issues",
+  "dependencies": {
+    "g8-xml-patch": "^0.1.2",
+    "iconv-lite": "^0.5.1",
+    "xmldom-ts": "^0.3.1",
+    "xpath-ts": "^1.3.13",
+    "yargs": "^15.3.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-typescript": "^7.8.3",
     "@types/jest": "^25.1.4",
+    "@types/node": "^12.12.30",
+    "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-core": "^6.26.3",
@@ -34,12 +45,18 @@
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "prettier": "2.0.4",
+    "pretty-data": "^0.40.0",
+    "pretty-quick": "^2.0.1",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3",
