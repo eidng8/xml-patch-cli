@@ -1,5 +1,5 @@
 {
-  "name": "ts-hello",
+  "name": "g8-xml-patch-cli",
   "version": "0.0.1",
   "description": "RFC 5261 compliant XML patch command line tool.",
   "main": "bin/index.js",
