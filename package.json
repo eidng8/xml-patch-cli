@@ -1,6 +1,6 @@
 {
   "name": "g8-xml-patch-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "RFC 5261 compliant XML patch command line tool.",
   "main": "bin/index.js",
   "bin": "bin/index.js",
