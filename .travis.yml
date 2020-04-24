@@ -2,42 +2,45 @@ branches:
   only:
     - master
     - dev
-os:
-  - linux
+    - /Release-v\d+\.\d+\.\d+/
+os: linux
+dist: bionic
 language: node_js
-node_js:
-  - 12
+node_js: 12
 cache:
   directories:
     - node_modules
-install:
-  - npm install
-
-script:
-  - if [[ ${BUNDLE_ANALYZER_TOKEN} != "" ]]; then npm install --no-save @bundle-analyzer/webpack-plugin; fi
-  - npm run build
-  - npm test
-
-before_deploy:
-  - export TRAVIS_TAG=$(node -p "require('./package.json').version")
-  - echo ${TRAVIS_TAG}
-  - 'if [[ ${TAGGED} != 1 ]]; then export PACKAGE=$(npm pack --silent) && git tag ${TRAVIS_TAG} && export TAGGED=1; fi'
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    file: $PACKAGE
-    api_key:
-      secure: iXcRgSgyD4aqe9jAGFxKlXworkDNummooQ9n+6KFLXeafsZRvx7wezPSxjtEuVLWVlbdZrkbvzq6zQRlN2OV9M1ONRCtmZvh9HvrEL3bDqWpUbM2Pk7iSSyjXQZzZll+3pSizgcELPF/WVSADPwkXd9qLWeU1pTRyYeckRuti1gQUxOxDEch3xqdycFkATEr+bDFDE9W5Z/jXpHqiouwBMLzB14o/BJzoJ7FF7c4L4dka7g+VP8UI4+CCI47qcJv09Klko4G782qRmJ7/vT+xOo/JEuDH7QJ4Su5R7IfmRiLs3LktnebYmXw0+IqAxY8hsbxnchFSx2pkS0WcRXPeIt5r9Y63wN8UVuPou57pqBVGzyw2rnKy1VEkb1QHbwvrJL8Tr5AbXKSLYlmel6xANRMOv0wRfvHlxLxKiK45NJZCgQCVNBkBKh/f9qrU+R5ZTt1DrmMR1B5O3O7hSkxCJBHXNSpTPr0Kkg6BJSYdjju+9KS/6vxvHc3n9y4mpv8iHlocqDFDgPVml1+CqNRWZ2tj/mA1GdLd1xmvjq+pdNdE6bgXlKhUqhS9/TSO1qwFYyYorQ7cVjrFDoHNM5zt9HDH7B+kv1Rhq8CU+v2PKXLMlkR+jKfhBO2Zfj1ous6s0fSNHK7L0+c3Kn7+nnh7TxrKTixKJZIlxrDbLXPM0k=
-    on:
-      repo: eidng8/xml-patch-cli
-      branch: master
-      condition: ${TRAVIS_EVENT_TYPE} == push
-  - provider: npm
-    skip_cleanup: true
-    email: cheung.jackey@gmail.com
-    api_key:
-      secure: eEPxJwBBlAdn1z+oE/ix24MoOkgXLb6zzhHO8EYquoCbxDlZqWPGCfHhdHDok2aNi+huaFL80yueMnQ09xP6akMUhRJoCcRof5jc0Z4CkYddVpeO4JDin5W0tslWdOyhmyd/aEDn+xCZrRic/LPi9HVr2ZT3jsiHkNYrqdHuKXAXcCo15iajLvcfVaVdVk9NyyCpXSXNb8LkxVx+GMnIvMOokpSFh3p6m+Pq0wfMRKHTsOIiF7aA60kFD79DmAJBLPIlX9q29KTlFDOVjXcb1wysXhVvJ1aa+d2Y0ofC2DJHDSiWA536U6VWTPe35jDCiqrZU7d2LfciMlG0F77GevUNxwLDkbzHahKitMBBrjHjQ6S6f66qxz/9vMgHsd5JfBwjb5nXswe/5ZwjqkysfFLVoUmsbZOcOoQbZaZDM3nZIIMXSxfyskJQi/PlyUmiBx1JLgdZe6Iz2mEv3/XXesX5+vT/niC/32jD6ilXSlzSjkYH4+ZddBekQTTndHg4hD0445sIIi0MivaQUxqJyVvcNOL2hm3nKsVV17A2qNy92bAqOyTfGMwig6DrlmWCXZmFkIBs2AxtrdmlOPl7COTSiKwKyfp4B4bbnBMViPhO81earEKTk0NGukL2KkrprddcSfYc9zC+NnO1CH4T4qSEqiwy10h13NWNhEABJRA=
-    on:
-      repo: eidng8/xml-patch-cli
-      branch: master
-      condition: ${TRAVIS_EVENT_TYPE} == push
+jobs:
+  include:
+    - stage: test
+      install: npm install
+      script: npm test
+    - stage: deploy
+      script: skip
+      before_deploy:
+        - npm install
+        - npm run build
+        - export PACKAGE=$(npm pack --silent)
+      deploy:
+        edge: true
+        provider: releases
+        file: ${PACKAGE}
+        release_notes_file: RELEASE.md
+        token:
+          secure: iXcRgSgyD4aqe9jAGFxKlXworkDNummooQ9n+6KFLXeafsZRvx7wezPSxjtEuVLWVlbdZrkbvzq6zQRlN2OV9M1ONRCtmZvh9HvrEL3bDqWpUbM2Pk7iSSyjXQZzZll+3pSizgcELPF/WVSADPwkXd9qLWeU1pTRyYeckRuti1gQUxOxDEch3xqdycFkATEr+bDFDE9W5Z/jXpHqiouwBMLzB14o/BJzoJ7FF7c4L4dka7g+VP8UI4+CCI47qcJv09Klko4G782qRmJ7/vT+xOo/JEuDH7QJ4Su5R7IfmRiLs3LktnebYmXw0+IqAxY8hsbxnchFSx2pkS0WcRXPeIt5r9Y63wN8UVuPou57pqBVGzyw2rnKy1VEkb1QHbwvrJL8Tr5AbXKSLYlmel6xANRMOv0wRfvHlxLxKiK45NJZCgQCVNBkBKh/f9qrU+R5ZTt1DrmMR1B5O3O7hSkxCJBHXNSpTPr0Kkg6BJSYdjju+9KS/6vxvHc3n9y4mpv8iHlocqDFDgPVml1+CqNRWZ2tj/mA1GdLd1xmvjq+pdNdE6bgXlKhUqhS9/TSO1qwFYyYorQ7cVjrFDoHNM5zt9HDH7B+kv1Rhq8CU+v2PKXLMlkR+jKfhBO2Zfj1ous6s0fSNHK7L0+c3Kn7+nnh7TxrKTixKJZIlxrDbLXPM0k=
+        on:
+          repo: eidng8/xml-patch-cli
+          branch: /Release-v\d+\.\d+\.\d+/
+          tags: true
+    - stage: deploy
+      script: skip
+      deploy:
+        edge: true
+        provider: npm
+        email: cheung.jackey@gmail.com
+        api_token:
+          secure: eEPxJwBBlAdn1z+oE/ix24MoOkgXLb6zzhHO8EYquoCbxDlZqWPGCfHhdHDok2aNi+huaFL80yueMnQ09xP6akMUhRJoCcRof5jc0Z4CkYddVpeO4JDin5W0tslWdOyhmyd/aEDn+xCZrRic/LPi9HVr2ZT3jsiHkNYrqdHuKXAXcCo15iajLvcfVaVdVk9NyyCpXSXNb8LkxVx+GMnIvMOokpSFh3p6m+Pq0wfMRKHTsOIiF7aA60kFD79DmAJBLPIlX9q29KTlFDOVjXcb1wysXhVvJ1aa+d2Y0ofC2DJHDSiWA536U6VWTPe35jDCiqrZU7d2LfciMlG0F77GevUNxwLDkbzHahKitMBBrjHjQ6S6f66qxz/9vMgHsd5JfBwjb5nXswe/5ZwjqkysfFLVoUmsbZOcOoQbZaZDM3nZIIMXSxfyskJQi/PlyUmiBx1JLgdZe6Iz2mEv3/XXesX5+vT/niC/32jD6ilXSlzSjkYH4+ZddBekQTTndHg4hD0445sIIi0MivaQUxqJyVvcNOL2hm3nKsVV17A2qNy92bAqOyTfGMwig6DrlmWCXZmFkIBs2AxtrdmlOPl7COTSiKwKyfp4B4bbnBMViPhO81earEKTk0NGukL2KkrprddcSfYc9zC+NnO1CH4T4qSEqiwy10h13NWNhEABJRA=
+        on:
+          repo: eidng8/xml-patch-cli
+          branch: /Release-v\d+\.\d+\.\d+/
+          tags: true
