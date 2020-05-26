@@ -18,5 +18,5 @@ npm i -g g8-xml-patch-cli
 ## How to use
 
 ```
-g8-xml-patch-cli <in file> <out file>
+g8-xml-patch-cli <in file> <patch file> <out file>
 ```
